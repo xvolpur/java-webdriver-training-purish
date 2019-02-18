@@ -63,8 +63,7 @@ public class SimpleGoogleTest<pathToOpera> {
               System.out.println("Test Chrome Starteded");
 
                  System.setProperty("webdriver.chrome.driver", driverPathChrome);
-                 drvChrome = new ChromeDriver(new ChromeDriverService.Builder().
-                 usingDriverExecutable(new File(driverPathChrome)).build());
+                 drvChrome = new ChromeDriver();
 
                  drvChrome.get("https://google.com");
                  drvChrome.findElement(By.name("q")).sendKeys("Selenium");
