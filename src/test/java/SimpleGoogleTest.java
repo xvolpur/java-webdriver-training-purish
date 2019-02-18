@@ -30,7 +30,6 @@ public class SimpleGoogleTest<pathToOpera> {
 
     private String pathToOpera = "C:\\Users\\volodymyr.purish\\AppData\\Local\\Programs\\Opera\\58.0.3135.65_0\\opera.exe";
 
-
     @Before
     public void googleTest_setup(){
               System.out.println("Tests Started");
