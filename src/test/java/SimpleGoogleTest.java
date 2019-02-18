@@ -78,9 +78,10 @@ public class SimpleGoogleTest<pathToOpera> {
               System.out.println("Test Firefox Starteded");
 
                  System.setProperty("webdriver.gecko.driver", driverPathFirefox);
-                 DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-                 capabilities.setCapability("marionette", true);
-                 drvFirefox = new FirefoxDriver(capabilities);
+                 drvFirefox = new FirefoxDriver();
+                 //DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+                 //capabilities.setCapability("marionette", true);
+                // drvFirefox = new FirefoxDriver(capabilities);
 
                  drvFirefox.get("https://google.com");
                  drvFirefox.findElement(By.name("q")).sendKeys("Selenium");
@@ -110,13 +111,15 @@ public class SimpleGoogleTest<pathToOpera> {
 
               System.out.println("Test Opera Starteded");
 
-                 DesiredCapabilities capabilities = new DesiredCapabilities();
-                 OperaOptions options = new OperaOptions();
-                 options.setBinary(pathToOpera);
-                 capabilities.setCapability(OperaOptions.CAPABILITY, options);
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                OperaOptions options = new OperaOptions();
+                options.setBinary(pathToOpera);
+                capabilities.setCapability(OperaOptions.CAPABILITY, options);
 
-                 System.setProperty("webdriver.opera.driver", driverPathOpera);
-                 drvOpera = new OperaDriver(capabilities);
+                System.setProperty("webdriver.opera.driver", driverPathOpera);
+                drvOpera = new OperaDriver(capabilities);
+                 //drvOpera = new OperaDriver();
+
 
                  drvOpera.get("https://google.com");
                  drvOpera.findElement(By.name("q")).sendKeys("Selenium");
