@@ -95,10 +95,10 @@ public class litecart2Section {
             driver.findElement(locator);
             return true;
         }
-        catch (InvalidSelectorException ex)
-        {
-            throw ex;
-        }
+        //catch (InvalidSelectorException ex)
+       // {
+        //    throw ex;
+       // }
         catch (NoSuchElementException ex) {
             return false;
         }
