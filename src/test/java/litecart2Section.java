@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 public class litecart2Section {
 
     private WebDriver drvChrome;
-    private String driverPathChrome="D:/Projects/chromedriver.exe";
+    private String driverPathChrome = "D:/Projects/chromedriver.exe";
 
     @Before
     public void litecartTest_setup() {
@@ -29,12 +29,12 @@ public class litecart2Section {
         drvChrome.findElement(By.name("password")).sendKeys("admin");
         drvChrome.findElement(By.name("login")).click();
 
-      // WebDriver.ChromeDriver().setup();
-       // drvChrome = new ChromeDriver();
+        // WebDriver.ChromeDriver().setup();
+        // drvChrome = new ChromeDriver();
     }
 
     @After
-    public void litecartTest_cleanup(){
+    public void litecartTest_cleanup() {
         drvChrome.quit();
         System.out.println("Tests litecart Finished");
     }
@@ -44,17 +44,17 @@ public class litecart2Section {
 
         System.out.println("Test litecartLogin Starteded");
 
-       // if(isElementPresent(drvChrome, By.className("header"))) --> this if with By.className is correct to
-        if(isElementPresent(drvChrome, By.id("body-wrapper")))
+        // if(isElementPresent(drvChrome, By.className("header"))) --> this if with By.className is correct to
+        if (isElementPresent(drvChrome, By.id("body-wrapper")))
         {
             System.out.println("Element found");
         }
         else
-        {
+            {
             System.out.println("Element not found");
         }
 
-         Thread.sleep(3000);
+        Thread.sleep(3000);
 
         System.out.println("Test litecartLogin Finished");
     }
@@ -63,12 +63,12 @@ public class litecart2Section {
     @Test
     public void appearenceTemplatePpage() {
 
-        if(isElementPresent(drvChrome, By.name("template_form")))
+        if (isElementPresent(drvChrome, By.name("template_form")))
         {
             System.out.println("Element found");
         }
         else
-        {
+            {
             System.out.println("Element not found");
         }
     }
@@ -79,12 +79,12 @@ public class litecart2Section {
         drvChrome.get("http://localhost/litecart/admin/?app=appearance&doc=logotype");
 
         //if(isElementPresent(drvChrome, By.className("fa-stack icon-wrapper"))) logotype_form
-        if(isElementPresent(drvChrome, By.name("logotype_form")))
+        if (isElementPresent(drvChrome, By.name("logotype_form")))
         {
             System.out.println("Element found");
         }
         else
-        {
+            {
             System.out.println("Element not found");
         }
     }
@@ -104,59 +104,3 @@ public class litecart2Section {
         }
     }
 }
-/* =======
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class litecart2Section {
-
-    WebDriver drvChrome;
-    private String driverPathChrome="D:/Projects/chromedriver.exe";
-
-    @Before
-    public void litecartTest_setup() {
-        System.out.println("Tests Started");
-        System.setProperty("webdriver.chrome.driver", driverPathChrome);
-        drvChrome = new ChromeDriver();
-
-      // WebDriver.ChromeDriver().setup();
-       // drvChrome = new ChromeDriver();
-    }
-
-    @After
-    public void litecartTest_cleanup(){
-        //drv.quit();
-        System.out.println("Tests Finished");
-    }
-
-    @Test
-    public void litecartTest() throws InterruptedException {
-
-        System.out.println("Test litecart Starteded");
-
-
-        drvChrome.get("http://localhost/litecart/admin/?app=appearance&doc=template");
-
-        drvChrome.findElement(By.name("username")).sendKeys("admin");
-        drvChrome.findElement(By.name("password")).sendKeys("admin");
-        drvChrome.findElement(By.name("login")).click();
-
-        Thread.sleep(3000);
-        drvChrome.quit();
-
-        System.out.println("Test litecart Finished");
-    }
-
-
-
-
-
-
-}
->>>>>>> original/master
-*/
