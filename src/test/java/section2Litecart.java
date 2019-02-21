@@ -1,109 +1,95 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.InvalidSelectorException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
-
-import java.util.NoSuchElementException;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.util.List;
 
 public class section2Litecart {
 
-           private WebDriver drvChrome;
-        private String driverPathChrome = "D:/Projects/chromedriver.exe";
+    private WebDriver driver;
+    private WebDriverWait wait;
 
-        @Before
-        public void litecartTest_setup() {
+    private String baseURL = "http://localhost/litecart";
+    private String username = "admin";
+    private String password = "admin";
 
-            System.out.println("Tests litecart Started");
+    @Before
+    public void litecartTest_setup() {
 
-            System.setProperty("webdriver.chrome.driver", driverPathChrome);
-            drvChrome = new ChromeDriver();
+        System.out.println("Tests litecart Started");
 
-            drvChrome.get("http://localhost/litecart/admin/?app=appearance&doc=template");
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
 
-            drvChrome.findElement(By.name("username")).sendKeys("admin");
-            drvChrome.findElement(By.name("password")).sendKeys("admin");
-            drvChrome.findElement(By.name("login")).click();
+        wait = new WebDriverWait(driver, 4);
+        performLogin();
 
-            // WebDriver.ChromeDriver().setup();
-            // drvChrome = new ChromeDriver();
-        }
+    }
 
-        @After
-        public void litecartTest_cleanup() {
-            drvChrome.quit();
-            System.out.println("Tests litecart Finished");
-        }
+    @After
+    public void litecartTest_cleanup() {
+        driver.quit();
+        System.out.println("Tests litecart Finished");
+    }
 
-        @Test
-        public void litecarPageAfertLoginTest() throws InterruptedException {
+    private void performLogin(){
+        By sidebar = By.id("sidebar");
 
-            System.out.println("Test litecartLogin Starteded");
+        driver.navigate().to(baseURL + "/admin");
 
-            // if(isElementPresent(drvChrome, By.className("header"))) --> this if with By.className is correct to
-            if (isElementPresent(drvChrome, By.id("body-wrapper")))
-            {
-                System.out.println("Element found");
-            }
-            else
-            {
-                System.out.println("Element not found");
-            }
+        if (isElementPresent(sidebar)) return;
 
-            Thread.sleep(3000);
+        driver.findElement(By.name("username")).sendKeys(username);
+        driver.findElement(By.name("password")).sendKeys(password);
+        driver.findElement(By.name("login")).click();
 
-            System.out.println("Test litecartLogin Finished");
-        }
+        wait.until(ExpectedConditions.presenceOfElementLocated(sidebar));
+    }
 
+private boolean isElementPresent(By element) {
+        return driver.findElements(element).size() > 0;
+    }
 
-        @Test
-        public void appearenceTemplatePpage() {
+    @Test
+    public void litecartMenuPages() {
 
-            if (isElementPresent(drvChrome, By.name("template_form")))
-            {
-                System.out.println("Element found");
-            }
-            else
-            {
-                System.out.println("Element not found");
-            }
-        }
+        By menuBlock = By.cssSelector("#sidebar ul#box-apps-menu");
+        List<WebElement> menuItems = driver.findElement(menuBlock).findElements(By.xpath("./li"));
 
-        @Test
-        public void appearenceLogotypePpage() {
+              //   IMPORTANT
+/*  DOM is reconstructed after click(); we need read element and just use his after read !!!
+         for (WebElement menuItem: menuItems)
+         {
+             System.out.println("item: "+menuItem.getText() );
+             menuItem.click();
+         }
+*/
+        By selectedItem = By.cssSelector("li.selected");
 
-            drvChrome.get("http://localhost/litecart/admin/?app=appearance&doc=logotype");
+        int menuSize = driver.findElement(menuBlock).findElements(By.xpath("./li")).size();//returned size of collection
 
-            //if(isElementPresent(drvChrome, By.className("fa-stack icon-wrapper"))) logotype_form
-            if (isElementPresent(drvChrome, By.name("logotype_form")))
-            {
-                System.out.println("Element found");
-            }
-            else
-            {
-                System.out.println("Element not found");
-            }
-        }
+        for (int menuItem = 1; menuItem <= menuSize; menuItem++) {
+            driver.findElement(menuBlock).findElement(By.xpath("./li[" + menuItem + "]")).click();
+            Assert.assertTrue("Page Title (h1 element) not found", isElementPresent(By.cssSelector("h1")));
 
-        private boolean isElementPresent(WebDriver driver, By locator) {
-
-            try {
-                driver.findElement(locator);
-                return true;
-            }
-            //catch (InvalidSelectorException ex)
-            // {
-            //    throw ex;
-            // }
-            catch (NoSuchElementException ex) {
-                return false;
+            int subMenuSize = driver.findElement(menuBlock).findElement(selectedItem).findElements(By.cssSelector("li")).size();
+                                                                       // may be as   findElements(By.xpath("./li") with same result
+            if (subMenuSize > 0) {      // we go through submenu items
+                for (int subMenuItem = 1; subMenuItem <= subMenuSize; subMenuItem++) {
+                    driver.findElement(selectedItem).findElement(By.cssSelector("li:nth-of-type(" + subMenuItem + ")")).click();
+                    Assert.assertTrue("Page Title (h1 element) not found", isElementPresent(By.cssSelector("h1")));
+                }
             }
         }
     }
-
+}
 
 
