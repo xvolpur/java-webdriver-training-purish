@@ -3,8 +3,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -12,10 +15,15 @@ import java.util.concurrent.TimeUnit;
 
 public class CampaignsYellowDuck {
 
-    private WebDriver driver;
-    private WebDriverWait wait;
+    private WebDriver drvChrome;
+    private WebDriver drvFirefox;
+    private WebDriver drvEdge;
 
-    private String baseURL = "http://localhost/litecart/public_html/";
+    private WebDriverWait wait;
+    private String driverPathFirefox = "d:/Projects/geckodriver-v0.24.0-win64/geckodriver.exe";
+    private String driverPathEdge = "d:/Projects/MicrosoftWebDriver.exe";
+
+    private String baseURL = "http://localhost/litecart/public_html/en/";
 
     @Before
     public void campaings_setup() {
@@ -23,14 +31,22 @@ public class CampaignsYellowDuck {
         System.out.println("TestsYellow Duck Started");
 
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        wait =new WebDriverWait(driver, 12);
+        drvChrome = new ChromeDriver();
+
+        //System.setProperty("webdriver.gecko.driver", driverPathFirefox);
+        //drvFirefox = new FirefoxDriver();
+
+        //System.setProperty("webdriver.edge.driver",driverPathEdge);
+        //drvEdge = new EdgeDriver();
+
+        wait =new WebDriverWait(drvChrome, 12);
         //driver.manage().window().maximize();
 
-        By mainPage = By.id("box-campaings");
+       ///// By mainPage = By.id("box-campaings");
 
-        driver.navigate().to(baseURL);
-
+        drvChrome.navigate().to(baseURL);
+       // drvFirefox.navigate().to(baseURL);
+        ///// ---> drvEdge.navigate().to(baseURL);
 
 
         // if (isElementPresent(sidebar)) return;    #box-campaigns
@@ -41,20 +57,41 @@ public class CampaignsYellowDuck {
 
     @After
     public void campaings__cleanup() {
-        driver.quit();
+       // driver.quit();
         System.out.println("Tests Yellow Duck Finished");
     }
 
     private boolean isElementPresent(By element) {
-        return driver.findElements(element).size() > 0;
+        return drvChrome.findElements(element).size() > 0;
     }
 
     @Test
     public void campaing() {
-       // wait.until(ExpectedConditions.presenceOfElementLocated(By.name("#box-campaings")));
+
+        //   itemPage
+
+        //WebElement yduck =  drvChrome.findElement(By.className("Similar Products")).getText();
+        if ( drvChrome.findElement(By.className("Similar Products")).getText() = ' ')
+        drvChrome.findElement(By.cssSelector("a.title='Yellow Duck'")).click();
+        else
+            System.out.println("error load");
+
+
+
+       wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("Categories")));
         //driver.manage().timeouts().setScriptTimeout(15, TimeUnit.SECONDS);
-    int asd;
-      asd = 10;
+      ///By.id ...).isDisplayed():
+        // elem = driver.findElement(By.cssSelector(#rotate"); rotate - это id
+        // elem.size();
+        //elem.location();
+        //  chrome, firefox, edge -  для всех
+
+
+
+      // String attrib =drvChrome.findElement(By.className("image-wrapper")).getAttribute("offsetHeight");
+       // WebElement as = driver.getAttribute("innerHTML");
+       //String attrib = as.getAttribute("offsetHeight");
+        System.out.println("offsetHeight = " + drvChrome.findElement(By.className("image-wrapper")).getAttribute("offsetHeight"));
 
     }
 
