@@ -45,27 +45,18 @@ public class CampaignsYellowDuck {
         wait =new WebDriverWait(drvChrome, 12);
         //driver.manage().window().maximize();
 
-       ///// By mainPage = By.id("box-campaings");
-
         drvChrome.navigate().to(baseURL);
        // drvFirefox.navigate().to(baseURL);
-        ///// ---> drvEdge.navigate().to(baseURL);
-
-
-        // if (isElementPresent(sidebar)) return;    #box-campaigns
-
-      //  wait = new WebDriverWait(driver, 7);       //*[@id="box-campaigns"]
+       // drvEdge.navigate().to(baseURL);
 
     }
 
     @After
     public void campaings__cleanup() {
-     drvChrome.quit();
+      drvChrome.quit();
+     //drvFirefox.quit();
+     //drvEdge.quit();
         System.out.println("Tests Yellow Duck Finished");
-    }
-
-    private boolean isElementPresent(By element) {
-        return drvChrome.findElements(element).size() > 0;
     }
 
     @Test
