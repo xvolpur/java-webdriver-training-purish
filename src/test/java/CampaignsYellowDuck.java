@@ -1,4 +1,5 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -13,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
+import static javafx.scene.paint.Color.rgb;
+
 public class CampaignsYellowDuck {
 
     private WebDriver drvChrome;
@@ -23,7 +26,7 @@ public class CampaignsYellowDuck {
     private String driverPathFirefox = "d:/Projects/geckodriver-v0.24.0-win64/geckodriver.exe";
     private String driverPathEdge = "d:/Projects/MicrosoftWebDriver.exe";
 
-    private String baseURL = "http://localhost/litecart/public_html/en/";
+    private String baseURL = "http://localhost/litecart/en/";
 
     @Before
     public void campaings_setup() {
@@ -57,7 +60,7 @@ public class CampaignsYellowDuck {
 
     @After
     public void campaings__cleanup() {
-       // driver.quit();
+     drvChrome.quit();
         System.out.println("Tests Yellow Duck Finished");
     }
 
@@ -68,33 +71,65 @@ public class CampaignsYellowDuck {
     @Test
     public void campaing() {
 
-        //   itemPage
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#fancybox-title")));
 
-        //WebElement yduck =  drvChrome.findElement(By.className("Similar Products")).getText();
-        if ( drvChrome.findElement(By.className("Similar Products")).getText() = ' ')
-        drvChrome.findElement(By.cssSelector("a.title='Yellow Duck'")).click();
-        else
-            System.out.println("error load");
+                //                                       Main Page
+        //***********************************************************************************************************
+        WebElement mainCampaing = drvChrome.findElement(By.cssSelector("#box-campaigns"));
 
+        String regPriceMainCampaing = mainCampaing.findElement(By.cssSelector(".regular-price")).getText();
 
+        String discontPriceCampaing = mainCampaing.findElement(By.cssSelector(".campaign-price")).getText();
 
-       wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("Categories")));
-        //driver.manage().timeouts().setScriptTimeout(15, TimeUnit.SECONDS);
-      ///By.id ...).isDisplayed():
-        // elem = driver.findElement(By.cssSelector(#rotate"); rotate - это id
-        // elem.size();
-        //elem.location();
-        //  chrome, firefox, edge -  для всех
+        String mainPageName = mainCampaing.findElement(By.cssSelector(".name")).getText();
 
+      // c.	Regular price is gray and strike ( ) on Main page
+      Assert.assertEquals( mainCampaing.findElement(By.cssSelector(".regular-price")).getCssValue("color"),"rgb(119, 119, 119)");
+/*   Expected :rgba(119, 119, 119, 1)
+     Actual   :rgb(119, 119, 119)     */
 
+       Assert.assertEquals( mainCampaing.findElement(By.cssSelector(".regular-price")).getCssValue("text-decoration-line:"),"line-through");
+/*    Expected :
+      Actual   :line-through   */
 
-      // String attrib =drvChrome.findElement(By.className("image-wrapper")).getAttribute("offsetHeight");
-       // WebElement as = driver.getAttribute("innerHTML");
-       //String attrib = as.getAttribute("offsetHeight");
-        System.out.println("offsetHeight = " + drvChrome.findElement(By.className("image-wrapper")).getAttribute("offsetHeight"));
+        //   d.	Campaigns price is red and bold on Main page
+      Assert.assertEquals(mainCampaing.findElement(By.cssSelector(".campaign-price")).getCssValue("color"),"rgb(204, 0, 0)" );
+/*     Expected :rgba(204, 0, 0, 1)
+       Actual   :rgb(204, 0, 0)    */
+
+      Assert.assertEquals(mainCampaing.findElement(By.cssSelector(".campaign-price")).getCssValue("font-weight"), "700");
+        /*    Expected =  Actual   */
+
+         //                              ITEM
+        //***************************************************************************************************
+      mainCampaing.findElement(By.cssSelector(".name")).click();
+
+      WebElement item =  drvChrome.findElement(By.cssSelector("div.information"));
+
+        // a.	Product Name is equal on Main page and on Item Page
+      Assert.assertEquals(drvChrome.findElement(By.cssSelector("h1.title")).getText(),mainPageName );
+
+        // b.	Prices (discount and regular) are equal on both pages
+      Assert.assertEquals(item.findElement(By.cssSelector(".regular-price")).getText(),regPriceMainCampaing );
+
+      Assert.assertEquals(item.findElement(By.cssSelector(".campaign-price")).getText(),discontPriceCampaing );
+
+//        c.	Regular price is gray and strike ( ) on ITEM page
+      Assert.assertEquals(item.findElement(By.cssSelector(".regular-price")).getCssValue("color"),"rgb(102, 102, 102)");
+/*    Expected :rgba(102, 102, 102, 1)
+      Actual   :rgb(102, 102, 102)       */
+
+      Assert.assertEquals(item.findElement(By.cssSelector(".regular-price")).getCssValue("text-decoration-line:"),"line-through");
+/*    Expected :
+      Actual   :line-through    */
+
+      //    d.	Campaigns price is red and bold on both pages
+      Assert.assertEquals(item.findElement(By.cssSelector(".campaign-price")).getCssValue("color"),"rgb(204, 0, 0)" );
+/*    Expected :rgba(204, 0, 0, 1)
+      Actual   :rgb(204, 0, 0)
+ */
+       Assert.assertEquals(item.findElement(By.cssSelector(".campaign-price")).getCssValue("font-weight"),"700" );
+/*    Expected =  Actual   */
 
     }
-
-
-
 }
