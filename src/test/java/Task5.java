@@ -97,14 +97,13 @@ public class Task5 {
         String itemName = "Item"+String.valueOf(currentMillSec).substring(7,13);
         //populate field Name
         WebElement inputName = drvChrome.findElement(By.cssSelector("[name*=name]"));
-       // inputName.findElement(By.partialLinkText("Unisex"));
         inputName.sendKeys(itemName);
 
      //  Product Groups  / Unisex
         WebElement genderType = drvChrome.findElement(By.cssSelector("[value='1-3']"));
         genderType.click();
 
-     // populate upload file image    new_images[]
+     // populate upload file image
         WebElement uploadImage = drvChrome.findElement(By.cssSelector("[name*=new_images]"));
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("book.png").getFile());
