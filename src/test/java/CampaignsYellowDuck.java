@@ -81,8 +81,9 @@ public class CampaignsYellowDuck {
         System.out.println("Edge test point 3");
 
         // c.	Regular price is gray and strike ( ) on Main page
+
         Assert.assertEquals( mainCampaing.findElement(By.cssSelector(".regular-price")).getCssValue("color"),"rgb(119, 119, 119)");
-        /*    Expected =  Actual   */
+                /*    Expected =  Actual   */
 
         // Assert.assertEquals( mainCampaing.findElement(By.cssSelector(".regular-price")).getCssValue("text-decoration-line:"),"line-through");   same with Chrome
 /*    Expected :
