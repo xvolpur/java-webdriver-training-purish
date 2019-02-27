@@ -13,8 +13,10 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.awt.*;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -86,8 +88,10 @@ public class Task5 {
 
           drvChrome.findElement(By.partialLinkText("Add New Product")).click();
 
-        //   Add New Product General
+        //   Add New Product  / General
         //*********************************************************
+        // Status to Enable
+        drvChrome.findElement(By.cssSelector("[value='1']")).click();
 
         // returns the current time in milliseconds + substring
         System.out.print("Current Time in milliseconds = ");
@@ -99,9 +103,28 @@ public class Task5 {
         WebElement inputName = drvChrome.findElement(By.cssSelector("[name*=name]"));
         inputName.sendKeys(itemName);
 
+     //  Code
+        WebElement codeValue = drvChrome.findElement(By.cssSelector("[name=code]"));
+        codeValue.sendKeys(String.valueOf(currentMillSec));
+
      //  Product Groups  / Unisex
         WebElement genderType = drvChrome.findElement(By.cssSelector("[value='1-3']"));
         genderType.click();
+
+     // Quantity
+        WebElement quantityValue = drvChrome.findElement(By.cssSelector("[value='0.00']"));
+        quantityValue.clear();
+        quantityValue.sendKeys("7");
+        System.out.println(quantityValue.getText());
+
+
+     // Date Valid From
+        WebElement dateValidFrom = drvChrome.findElement(By.cssSelector("[name=date_valid_from]"));
+        dateValidFrom.sendKeys("02/28/2019");
+
+     // Date Valid To
+        WebElement dateValidTo = drvChrome.findElement(By.cssSelector("[name=date_valid_to]"));
+        dateValidTo.sendKeys("03/28/2019");
 
      // populate upload file image
         WebElement uploadImage = drvChrome.findElement(By.cssSelector("[name*=new_images]"));
@@ -112,6 +135,59 @@ public class Task5 {
         System.out.println(file.getAbsolutePath());
         // printed  D:\src\out\test\resources\book.png
 
+     // Go to Information
+        drvChrome.findElement(By.cssSelector("[href*=information]")).click();
 
+    // Manufacturer Select
+       Select selectManufacturer = new Select(drvChrome.findElement(By.name("manufacturer_id")));
+       selectManufacturer.selectByIndex(1);
+
+    //Keywords     name="keywords"
+        WebElement keywords = drvChrome.findElement(By.cssSelector("[name=keywords]"));
+        keywords.sendKeys("Key Inform");
+
+    //   Short Description
+        WebElement shortDescr = drvChrome.findElement(By.cssSelector("[name*=short_description]"));
+        shortDescr.sendKeys("Short_description of item");
+
+
+    //  Description             trumbowyg-editor
+        WebElement descript = drvChrome.findElement(By.cssSelector(".trumbowyg-editor"));
+        descript.sendKeys(" Main description of item.");
+
+    //  Head Title   [en]
+        WebElement  headTitle = drvChrome.findElement(By.cssSelector("[name*=head_title]"));
+        headTitle.sendKeys(" It's head title.");
+
+    //  Meta Description
+        WebElement  meta = drvChrome.findElement(By.cssSelector("[name*=meta_description]"));
+        meta.sendKeys(" Don't worry Be happy!");
+
+
+        // Go to Price
+        drvChrome.findElement(By.cssSelector("[href*=tab-prices]")).click();
+
+    //  Purchase Price
+        WebElement  purchasePrice = drvChrome.findElement(By.cssSelector("[name=purchase_price]"));
+        purchasePrice.clear();
+        purchasePrice.sendKeys("12.00");
+
+     // Purchase Price Select
+        Select selectPurchasePrice = new Select(drvChrome.findElement(By.name("purchase_price_currency_code")));
+        selectPurchasePrice.selectByIndex(2);
+
+     // gross_prices[USD]
+        WebElement  grossPricesUSD = drvChrome.findElement(By.cssSelector("[name='gross_prices[USD]']"));
+        grossPricesUSD.clear();
+        grossPricesUSD.sendKeys("22.00");
+
+    //gross_prices[EUR]
+        WebElement  grossPricesEUR = drvChrome.findElement(By.cssSelector("[name='gross_prices[EUR]']"));
+        grossPricesEUR.clear();
+        grossPricesEUR.sendKeys("20.00");
+
+     // Save Add New Product
+     //************************************************************************
+        drvChrome.findElement(By.cssSelector("[name=save]")).click();
     }
 }
