@@ -114,22 +114,22 @@ public class Task5 {
      // Quantity
         WebElement quantityValue = drvChrome.findElement(By.cssSelector("[value='0.00']"));
         quantityValue.clear();
-        quantityValue.sendKeys("7");
+        quantityValue.sendKeys("9");
         System.out.println(quantityValue.getText());
 
 
      // Date Valid From
         WebElement dateValidFrom = drvChrome.findElement(By.cssSelector("[name=date_valid_from]"));
-        dateValidFrom.sendKeys("02/28/2019");
+        dateValidFrom.sendKeys("03/21/2019");
 
      // Date Valid To
         WebElement dateValidTo = drvChrome.findElement(By.cssSelector("[name=date_valid_to]"));
-        dateValidTo.sendKeys("03/28/2019");
+        dateValidTo.sendKeys("04/02/2019");
 
      // populate upload file image
         WebElement uploadImage = drvChrome.findElement(By.cssSelector("[name*=new_images]"));
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("book.png").getFile());
+        File file = new File(classLoader.getResource("schip.png").getFile());
         uploadImage.sendKeys(file.getAbsolutePath());
 
         System.out.println(file.getAbsolutePath());
@@ -170,7 +170,7 @@ public class Task5 {
     //  Purchase Price
         WebElement  purchasePrice = drvChrome.findElement(By.cssSelector("[name=purchase_price]"));
         purchasePrice.clear();
-        purchasePrice.sendKeys("12.00");
+        purchasePrice.sendKeys("10.00");
 
      // Purchase Price Select
         Select selectPurchasePrice = new Select(drvChrome.findElement(By.name("purchase_price_currency_code")));
@@ -179,15 +179,18 @@ public class Task5 {
      // gross_prices[USD]
         WebElement  grossPricesUSD = drvChrome.findElement(By.cssSelector("[name='gross_prices[USD]']"));
         grossPricesUSD.clear();
-        grossPricesUSD.sendKeys("22.00");
+        grossPricesUSD.sendKeys("32.00");
 
     //gross_prices[EUR]
         WebElement  grossPricesEUR = drvChrome.findElement(By.cssSelector("[name='gross_prices[EUR]']"));
         grossPricesEUR.clear();
-        grossPricesEUR.sendKeys("20.00");
+        grossPricesEUR.sendKeys("24.00");
 
      // Save Add New Product
      //************************************************************************
-        drvChrome.findElement(By.cssSelector("[name=save]")).click();
-    }
+       //drvChrome.findElement(By.cssSelector("[name=save]")).click();
+        drvChrome.findElement(By.cssSelector("[name=save]")).submit();
 }
+
+
+    }
