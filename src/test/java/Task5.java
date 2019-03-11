@@ -1,3 +1,4 @@
+import com.sun.xml.internal.ws.policy.AssertionSet;
 import org.junit.After;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,14 +19,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static javafx.scene.paint.Color.rgb;
 
 public class Task5 {
 
-
+// Create new items
     private WebDriver drvChrome;
     private WebDriverWait wait;
     private String baseURL = "http://localhost/litecart/admin";
@@ -41,14 +44,14 @@ public class Task5 {
         WebDriverManager.chromedriver().setup();
         drvChrome = new ChromeDriver();
 
-        wait =new WebDriverWait(drvChrome, 18);
+        wait =new WebDriverWait(drvChrome, 10);
        //driver.manage().window().maximize();
          performLogin();
     }
 
     @After
     public void taskt5_cleanup() {
-        // drvChrome.quit();
+         drvChrome.quit();
                 System.out.println("Tests5 is Finished");
     }
 
@@ -93,10 +96,6 @@ public class Task5 {
         // Status to Enable
         drvChrome.findElement(By.cssSelector("[value='1']")).click();
 
-        // returns the current time in milliseconds + substring
-        System.out.print("Current Time in milliseconds = ");
-        System.out.println(System.currentTimeMillis());
-
         long currentMillSec = System.currentTimeMillis();
         String itemName = "Item"+String.valueOf(currentMillSec).substring(7,13);
         //populate field Name
@@ -117,7 +116,6 @@ public class Task5 {
         quantityValue.sendKeys("9");
         System.out.println(quantityValue.getText());
 
-
      // Date Valid From
         WebElement dateValidFrom = drvChrome.findElement(By.cssSelector("[name=date_valid_from]"));
         dateValidFrom.sendKeys("03/21/2019");
@@ -131,9 +129,6 @@ public class Task5 {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("schip.png").getFile());
         uploadImage.sendKeys(file.getAbsolutePath());
-
-        System.out.println(file.getAbsolutePath());
-        // printed  D:\src\out\test\resources\book.png
 
      // Go to Information
         drvChrome.findElement(By.cssSelector("[href*=information]")).click();
@@ -172,11 +167,11 @@ public class Task5 {
         purchasePrice.clear();
         purchasePrice.sendKeys("10.00");
 
-     // Purchase Price Select
+    // Purchase Price Select
         Select selectPurchasePrice = new Select(drvChrome.findElement(By.name("purchase_price_currency_code")));
         selectPurchasePrice.selectByIndex(2);
 
-     // gross_prices[USD]
+    // gross_prices[USD]
         WebElement  grossPricesUSD = drvChrome.findElement(By.cssSelector("[name='gross_prices[USD]']"));
         grossPricesUSD.clear();
         grossPricesUSD.sendKeys("32.00");
@@ -186,11 +181,35 @@ public class Task5 {
         grossPricesEUR.clear();
         grossPricesEUR.sendKeys("24.00");
 
-     // Save Add New Product
-     //************************************************************************
-       //drvChrome.findElement(By.cssSelector("[name=save]")).click();
-        drvChrome.findElement(By.cssSelector("[name=save]")).submit();
-}
+    // Save <Add New Product>
+    //************************************************************************
+        drvChrome.findElement(By.cssSelector("[name=save]")).click();
 
+    // verify that new item is added to the catalog
+        By catalogRoot = By.cssSelector("[name=catalog_form]");
+        wait.until(ExpectedConditions.presenceOfElementLocated(catalogRoot));
 
+        WebElement catalogRoot1  = drvChrome.findElement(By.cssSelector("table.dataTable"));
+
+        List<WebElement> rowsItem = catalogRoot1.findElements(By.tagName("tr"));
+
+        Set<String> s = new HashSet<String>();
+
+        for (WebElement row : rowsItem) {
+            List<WebElement> cols = row.findElements(By.tagName("td"));
+
+                 for (WebElement a : cols)
+                    s.add(a.getText());
+            }
+                Assert.assertTrue(s.contains(itemName));
+        }
     }
+
+
+
+
+
+
+
+
+
