@@ -1,25 +1,18 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
 public class Task7RemoteWebDriver {
 
+//RemoteWebDriver on local selenium server
     private String baseURL = "http://localhost/litecart";
     private String username = "admin";
     private String password = "admin";
@@ -49,7 +42,6 @@ public class Task7RemoteWebDriver {
 
     @Test
     public void localSeleniumDriver() {
-
 
         wait = new WebDriverWait(driver, 5);
         driver.get(baseURL + "/admin");

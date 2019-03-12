@@ -12,11 +12,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.concurrent.TimeUnit;
-
-import static javafx.scene.paint.Color.rgb;
 
 public class CampaignsYellowDuck {
+
+// Task 4: Check that properties for Product are correctly displayed
+// The task can be executed for Chrome, Firefox and Edge
 
     private WebDriver drvChrome;
     private WebDriver drvFirefox;

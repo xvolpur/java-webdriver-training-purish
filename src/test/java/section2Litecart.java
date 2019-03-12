@@ -13,6 +13,7 @@ import java.util.List;
 
 public class section2Litecart {
 
+//  Task 3: Create scenario which navigates through all sections on Admin page
     private WebDriver driver;
     private WebDriverWait wait;
 

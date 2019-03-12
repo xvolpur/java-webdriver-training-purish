@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
     public class Task7 {
 
+// screenshot capture on exceptions
         EventFiringWebDriver eventDrv;
         private WebDriverWait wait;
 
@@ -23,21 +24,24 @@ import org.openqa.selenium.support.ui.WebDriverWait;
         @Before
         public void setup() {
 
-         // if we wii not see how to test running
-         //ChromeOptions opt = new ChromeOptions();
-         // opt.setHeadless(true);
-         // eventDrv = new EventFiringWebDriver(new ChromeDriver(opt)); screenShort will be captured
-
+/*       // if we will not see how to test running (screenShort will be captured) :
+         ChromeOptions opt = new ChromeOptions();
+         opt.setHeadless(true);
+         eventDrv = new EventFiringWebDriver(new ChromeDriver(opt));
+*/
             WebDriverManager.chromedriver().setup();
             eventDrv = new EventFiringWebDriver(new ChromeDriver());
             eventDrv.register(new Listener());
 
             wait = new WebDriverWait(eventDrv, 5);
             performLogin();
-                   }
+         }
 
         @After
-        public void stop() { eventDrv.quit();  }
+        public void stop()
+        {
+            eventDrv.quit();
+        }
 
         private void performLogin(){
             By sidebar = By.id("sidebar");
@@ -63,20 +67,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
         public void menuPagesListener() {
 
             eventDrv.findElement(By.cssSelector("#platform"));
-            eventDrv.findElement(By.cssSelector("#screenShot")).click();
+            eventDrv.findElement(By.cssSelector("#screenShot")).click();  // wrong
 
         }
-/*
-Task 7: Add logging capabilities to your test
 
-1.Done 	Copy code from “Task 3 : Create scenario which navigates through all sections on Admin page” into new class (e.g. Task 7)
-2.	Add EventFiringWebDriver
-3.	Add logging before and after find element
-4.	Add screenshot capture on exceptions
-5.	Send me the link to your scenario on GitHub
-6.	Optional: Execute scenario via RemoteWebDriver on local selenium server
-
- */
     }
 
 
